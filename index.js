@@ -1,43 +1,40 @@
-function generatePassword(lenght, includeLowercase,includeUppercase ,includeNumbers, includeSymbols ){
+function generatePassword(length, includeLowercase, includeUppercase, includeNumbers, includeSymbols) {
     const lowercaseChars = 'qwertyuiopasdfghjklzxcvbnm';
-    const UppercaseChars = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+    const uppercaseChars = 'QWERTYUIOPASDFGHJKLZXCVBNM';
     const numbersChars = '1234567890';
     const symbolsChars = '!@#$%^&*()_-=+';
 
-    let allowedChars = "";
-    let password = "";
+    let allowedChars = '';
+    let password = '';
 
-    allowedChars += includeLowercase ? lowercaseChars : "";
-    allowedChars += includeUppercase ? UppercaseChars : "";
-    allowedChars += includeNumbers ? numbersChars : "";
-    allowedChars += includeSymbols ? symbolsChars : "";
-    
-    
+    if (includeLowercase) allowedChars += lowercaseChars;
+    if (includeUppercase) allowedChars += uppercaseChars;
+    if (includeNumbers) allowedChars += numbersChars;
+    if (includeSymbols) allowedChars += symbolsChars;
 
-    if(lenght <= 0){
-        return`(password lenght must be at least 1)`;
+    if (length <= 0) {
+        return `(password length must be at least 1)`;
     }
-    if(allowedChars.length === 0){
+    if (allowedChars.length === 0) {
         return `(at least one type of character must be selected)`;
     }
-    for (let i = 0; i < lenght; i++) {
+
+    for (let i = 0; i < length; i++) {
         const randomIndex = Math.floor(Math.random() * allowedChars.length);
         password += allowedChars[randomIndex];
     }
-        
+
     return password;
 }
 
+function generateAndDisplayPassword() {
+    const passwordLength = parseInt(document.getElementById('passwordLength').value, 10);
+    const includeLowercase = document.getElementById('includeLowercase').checked;
+    const includeUppercase = document.getElementById('includeUppercase').checked;
+    const includeNumbers = document.getElementById('includeNumbers').checked;
+    const includeSymbols = document.getElementById('includeSymbols').checked;
 
-const passwordlenght = parseInt(prompt('Enter the desired password lenght:'),10);
-const includeLowercase = true;// or false
-const includeUppercase = true; // or false
-const includeNumbers = false; // or false
-const includeSymbols = false;
+    const password = generatePassword(passwordLength, includeLowercase, includeUppercase, includeNumbers, includeSymbols);
 
-const password = generatePassword(passwordlenght,
-                                includeLowercase,
-                                includeUppercase,
-                                includeNumbers,
-                                includeSymbols);
-console.log(`generate password: ${password}`);
+    document.getElementById('passwordOutput').textContent = password;
+}
